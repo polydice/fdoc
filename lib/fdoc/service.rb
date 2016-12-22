@@ -33,6 +33,9 @@ class Fdoc::Service
 
   def self.verify!(verb, path, request_params, response_params,
                    response_status, successful)
+    if request_params&.key?(:params)
+      request_params = request_params[:params]
+    end
     service = Fdoc::Service.new(Fdoc.service_path)
     endpoint = service.open(verb, path)
     endpoint.consume_request(request_params, successful)
